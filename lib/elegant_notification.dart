@@ -217,16 +217,15 @@ class ElegantNotification extends StatefulWidget {
   ///display the notification on the screen
   ///[context] the context of the application
   void show(BuildContext context) {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        pageBuilder: (context, _, __) => AlertDialog(
+    Overlay.of(context)?.insert(
+      OverlayEntry(
+        builder: (context) => AlertDialog(
           backgroundColor: Colors.transparent,
           contentPadding: const EdgeInsets.all(0),
           insetPadding: const EdgeInsets.all(70),
           elevation: 0,
           content: this,
         ),
-        opaque: false,
       ),
     );
   }
@@ -248,7 +247,7 @@ class _ElegantNotificationState extends State<ElegantNotification>
       slideController.reverse();
       slideController.addListener(() {
         if (slideController.isDismissed) {
-          Navigator.pop(context);
+          Navigator.of(context).pop();
           widget.onProgressFinished?.call();
         }
       });
